@@ -125,6 +125,7 @@ vim.schedule(function()
       end
     end
   end, {
+    nargs = '+',
     complete = function()
       return {
         'save',
