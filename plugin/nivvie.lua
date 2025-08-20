@@ -15,11 +15,9 @@ function session.get_uri()
   end)
 end
 
-local sessiondir = vim.g.sessiondir
-  or vim.fs.joinpath(vim.fn.stdpath 'state', 'sessions')
-
 ---@param name? string
 function session.get_path(name)
+  local sessiondir = require('nivvie.config').get().session_dir
   return vim.fs.joinpath(sessiondir, (name or session.get_uri()) .. '.vim')
 end
 
@@ -27,6 +25,7 @@ end
 function session.save(name)
   local session_file = session.get_path(name)
 
+  local sessiondir = require('nivvie.config').get().session_dir
   vim.fn.mkdir(sessiondir, 'p')
 
   vim.api.nvim_cmd({
@@ -45,7 +44,7 @@ function session.clean()
 end
 
 ---@param name? string
-function session.load(name)
+function session.restore(name)
   local path = session.get_path(name)
   if vim.uv.fs_stat(path) then
     vim.api.nvim_cmd({
@@ -58,7 +57,7 @@ end
 
 ----
 
-function session.shouldload()
+function session.isemptysession()
   if session.stdin then
     return false
   end
@@ -78,12 +77,17 @@ function session.shouldload()
   return #bufs == 0
 end
 
---- only load if necessary
-function session.autoload()
-  if not session.shouldload() then
+--- only restore if necessary
+function session.autorestore()
+  if not require('nivvie.config').get().autorestore then
     return
   end
-  session.load()
+
+  if not session.isemptysession() then
+    return
+  end
+
+  session.restore()
 end
 
 local group = vim.api.nvim_create_augroup('nivvie', { clear = true })
@@ -91,6 +95,9 @@ local group = vim.api.nvim_create_augroup('nivvie', { clear = true })
 vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
   group = group,
   callback = function()
+    if not require('nivvie.config').get().autosave then
+      return
+    end
     session.clean()
     session.save()
   end,
@@ -108,8 +115,8 @@ vim.schedule(function()
     if args.fargs[1] == 'save' then
       session.save(args.fargs[2])
       return
-    elseif args.fargs[1] == 'load' then
-      session.load(args.fargs[2])
+    elseif args.fargs[1] == 'restore' then
+      session.restore(args.fargs[2])
       return
     elseif args.fargs[1] == 'delete' then
       local path = session.get_path(args.fargs[2])
@@ -121,7 +128,7 @@ vim.schedule(function()
     complete = function()
       return {
         'save',
-        'load',
+        'restore',
         'delete',
       }
     end,
@@ -132,7 +139,7 @@ end)
 
 if vim.v.vim_did_enter > 0 then
   vim.schedule(function()
-    session.autoload()
+    session.autorestore()
   end)
   return
 end
@@ -141,9 +148,9 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   group = group,
   callback = function()
     vim.schedule(function()
-      session.autoload()
+      session.autorestore()
     end)
   end,
 })
 
-return session
+return
