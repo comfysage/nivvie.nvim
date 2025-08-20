@@ -70,7 +70,9 @@ function session.isemptysession()
   bufs = vim
     .iter(bufs)
     :filter(function(buf)
-      return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == ''
+      return vim.api.nvim_buf_is_valid(buf)
+        and vim.bo[buf].buftype == ''
+        and #vim.api.nvim_buf_get_name(buf) > 0
     end)
     :totable()
 
@@ -153,5 +155,3 @@ vim.api.nvim_create_autocmd({ 'VimEnter' }, {
     end)
   end,
 })
-
-return
