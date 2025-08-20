@@ -1,26 +1,26 @@
-# nivvie :seedline:
+# nivvie :seedling:
 
 tiny neovim session keeper, keeping your place safe
 
-## what it does 🍃
+## :herb: what it does
 
 nivvie remembers where you left off and restores it when you return (session
 handling). it keeps sessions stored safely and lets you call on them whenever
 you need, without clutter or extra ritual.
 
-## why nivvie 🍂
+## why nivvie
 
 there are larger session managers with more features. nivvie is a small and
 quiet companion, meant for when you want something clean, simple, and reliable.
 
-## features 🌸
+## :sparkles: features
 
 - automatic save and restore (no extra steps)
 - manual save, load, and delete commands (direct control)
 - minimal configuration (defaults just work)
 - lightweight and unobtrusive (stays out of the way)
 
-## installation 🌿
+## :potted_plant: installation
 
 add nivvie with your favourite plugin manager.
 
@@ -37,12 +37,12 @@ vim.pack.add({ "comfysage/nivvie.nvim" })
   "comfysage/nivvie.nvim",
   lazy = false, -- nivvie takes care of its own lazy loading
   config = function()
-    require("nivvie").setup()
+    require("nivvie").setup() -- not necessary to call
   end
 }
 ```
 
-## usage 🌼
+## :rose: usage
 
 sessions are saved automatically when you quit neovim and restored when you open it again. you can also manage sessions yourself:
 
@@ -59,7 +59,7 @@ vim.keymap.set("n", "<leader>ss", ":NivvieSave<CR>")
 vim.keymap.set("n", "<leader>sl", ":NivvieLoad<CR>")
 ```
 
-## configuration 🌾
+## :wilted_flower: configuration
 
 nivvie works without configuration (zero setup). you can still adjust its behavior:
 
