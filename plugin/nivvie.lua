@@ -9,11 +9,7 @@ local group = vim.api.nvim_create_augroup('nivvie', { clear = true })
 vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
   group = group,
   callback = function()
-    if not require('nivvie.config').get().autosave then
-      return
-    end
-    require('nivvie').clean()
-    require('nivvie').save()
+    require('nivvie').autosave()
   end,
 })
 

@@ -6,6 +6,7 @@ function nivvie.setup(cfg)
   require('nivvie.config').set(cfg)
 end
 
+nivvie.autorestored = false
 nivvie.stdin = false
 
 function nivvie.get_uri()
@@ -88,7 +89,23 @@ function nivvie.autorestore()
     return
   end
 
+  nivvie.autorestored = true
+
   nivvie.restore()
+end
+
+-- only save if nvim was not started with file arguments/stdin
+function nivvie.autosave()
+  if not nivvie.autorestored then
+    return
+  end
+
+  if not require('nivvie.config').get().autosave then
+    return
+  end
+
+  require('nivvie').clean()
+  require('nivvie').save()
 end
 
 return nivvie
