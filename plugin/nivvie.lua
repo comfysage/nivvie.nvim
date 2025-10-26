@@ -20,6 +20,22 @@ vim.api.nvim_create_autocmd({ 'StdinReadPost' }, {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'DirChangedPre' }, {
+  group = group,
+  pattern = 'global',
+  callback = function()
+    require('nivvie').save()
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'DirChanged' }, {
+  group = group,
+  pattern = 'global',
+  callback = function()
+    require('nivvie').restore()
+  end,
+})
+
 vim.schedule(function()
   vim.api.nvim_create_user_command('Nivvie', function(args)
     if args.fargs[1] == 'save' then
