@@ -51,6 +51,7 @@ function nivvie.restore(name)
       cmd = 'source',
       args = { path },
     }, {})
+    vim.v.this_session = path
     vim.api.nvim_exec_autocmds('SessionLoadPost', {})
   end
 end
