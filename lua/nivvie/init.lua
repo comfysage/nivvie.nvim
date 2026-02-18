@@ -59,7 +59,8 @@ end
 ----
 
 function nivvie.isemptysession()
-  if nivvie.stdin then
+  -- whether StdinReadPost was handled or ttyin was set
+  if nivvie.stdin or vim.fn.has 'ttyin' == 0 then
     return false
   end
 
