@@ -5,20 +5,18 @@ tiny neovim session keeper, keeping your place safe
 ## :herb: what it does
 
 nivvie remembers where you left off and restores it when you return (session
-handling). it keeps sessions stored safely and lets you call on them whenever
-you need, without clutter or extra ritual.
+handling). it keeps sessions stored safely and lets restore them whenever
+you need, no configuration or extra steps needed.
+
+- automatic save and restore
+- manual save, load, and delete commands
+- minimal configuration
+- lightweight and unobtrusive
 
 ## why nivvie
 
 there are larger session managers with more features. nivvie is a small and
 quiet companion, meant for when you want something clean, simple, and reliable.
-
-## :sparkles: features
-
-- automatic save and restore (no extra steps)
-- manual save, load, and delete commands (direct control)
-- minimal configuration (defaults just work)
-- lightweight and unobtrusive (stays out of the way)
 
 ## :potted_plant: installation
 
@@ -55,13 +53,13 @@ sessions are saved automatically when you quit neovim and restored when you open
 you may also map keys to these commands:
 
 ```lua
-vim.keymap.set("n", "<leader>ss", ":NivvieSave<CR>")
-vim.keymap.set("n", "<leader>sl", ":NivvieLoad<CR>")
+vim.keymap.set("n", "<leader>ss", "<cmd>Nivvie save<cr>")
+vim.keymap.set("n", "<leader>sl", "<cmd>Nivvie load<cr>")
 ```
 
 ## :wilted_flower: configuration
 
-nivvie works without configuration (zero setup). you can still adjust its behavior:
+nivvie works without configuration but you can still adjust its behavior:
 
 ```lua
 require("nivvie").setup({
