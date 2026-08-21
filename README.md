@@ -1,3 +1,5 @@
+
+
 # nivvie :seedling:
 
 tiny neovim session keeper, keeping your place safe
@@ -5,7 +7,7 @@ tiny neovim session keeper, keeping your place safe
 ## :herb: what it does
 
 nivvie remembers where you left off and restores it when you return (session
-handling). it keeps sessions stored safely and lets restore them whenever
+handling). it keeps sessions stored safely and lets you restore them whenever
 you need, no configuration or extra steps needed.
 
 - automatic save and restore
